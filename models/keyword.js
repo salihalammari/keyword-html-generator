@@ -5,8 +5,12 @@ const keywordSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        htmlContent: String
-    },   
-  });
+        trim: true
+    },
+    htmlContent: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
   
-  const Keyword = mongoose.model('Keyword', keywordSchema);
+module.exports = mongoose.model('Keyword', keywordSchema);
