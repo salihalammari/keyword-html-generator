@@ -12,10 +12,11 @@ const app = express();
 //Middleware
 app.use(cors());
 app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+  .catch(err => console.error('MongoDB connection error', err.message));
 
 //define router
 const uploadRouter = require('./routes/upload');
@@ -24,7 +25,3 @@ app.use('/upload', uploadRouter);
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
-
-// app.post('/upload', upload.single('file'), (rep, res) => {
-//     res.json({message: 'file upload successfully' });
-

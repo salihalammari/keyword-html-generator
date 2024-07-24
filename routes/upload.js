@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+exports.router = router;
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { processKeywords } = require('../controllers/keywordController');
+const { processKeywords } = require('../controllers/ControllerKeyword');
 
 
 const storage = multer.diskStorage({
@@ -24,9 +25,6 @@ router.post('/', upload.single('file'), async (req, res) => {
         res.json({ message: 'file upload and keyword processed successfully' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'internal server error' });
+        res.status(500).json({ error: 'server error' });
     }
 });
-
-
-module.exports = router;

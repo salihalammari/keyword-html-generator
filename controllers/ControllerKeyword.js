@@ -8,7 +8,6 @@ async function processKeywords(filePath) {
         const keywords = data.split('\n').map(keyword => keyword.trim()).filter(Boolean); // Trim and filter out empty lines
 
         for (let keyword of keywords) {
-            //const trimmedkeyword = keyword.trim(); //remove whitespace
             const htmlContent = `<html><head><title>${keyword}</title></head><body><h1>${keyword}</h1></body></html>`;
             
             await Keyword.create({ keyword, htmlContent }); // Save keyword and HTML content to MongoDB

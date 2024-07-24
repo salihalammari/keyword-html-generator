@@ -3,7 +3,7 @@ building an interface that demonstrates your skills in Node.js and MongoDB. The 
 
 ## Technology Stack
 
-**. Backend**: Node.js with Express framework
+**. Backend:** Node.js with Express framework
 
 **. Database:** MongoDB for storing keywords and generated HTML content
 
@@ -11,9 +11,9 @@ building an interface that demonstrates your skills in Node.js and MongoDB. The 
 
 **. File Upload:** Multer for handling file uploads in Node.js
 
-# Setting Up the Project Structure
+## Setting Up the Project Structure
 
-## First, initialize a new Node.js project and install necessary dependencies.
+### First, initialize a new Node.js project and install necessary dependencies.
 
 ```bash
 mkdir keyword-html-generator && cd keyword-html-generator
@@ -21,9 +21,9 @@ npm init -y
 npm install express multer mongoose cors dotenv
 ```
 
-## Create a **.env** file to store environment variables like MongoDB connection string.
+### Create a **.env** file to store environment variables like MongoDB connection string.
 
-# File Upload Endpoint
+## File Upload Endpoint
 Install Multer for handling file uploads.
 
 ```bash
