@@ -1,0 +1,27 @@
+{
+  "name": "keyword-html-generator",
+  "version": "1.0.0",
+  "description": "building an interface that demonstrates your skills in Node.js and MongoDB. The mission involves creating a web application where users can upload a file containing a list of keywords that i will share with you . The application will then generate HTML pages based on these keywords.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salihalammari/keyword-html-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salihalammari/keyword-html-generator/issues"
+  },
+  "homepage": "https://github.com/salihalammari/keyword-html-generator#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
