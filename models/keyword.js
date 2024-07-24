@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
 const keywordSchema = new mongoose.Schema({
-    keyword: String,
-    htmlContent: String
+    keyword: {
+        type: String,
+        required: true,
+        unique: true,
+        htmlContent: String
+    },   
   });
   
   const Keyword = mongoose.model('Keyword', keywordSchema);
