@@ -4,8 +4,11 @@ building an interface that demonstrates your skills in Node.js and MongoDB. The 
 ## Technology Stack
 
 **. Backend**: Node.js with Express framework
+
 **. Database:** MongoDB for storing keywords and generated HTML content
+
 **. Frontend:** React for building the user interface
+
 **. File Upload:** Multer for handling file uploads in Node.js
 
 # Setting Up the Project Structure
