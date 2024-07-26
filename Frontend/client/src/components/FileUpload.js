@@ -14,9 +14,13 @@ function FileUpload() {
 
     const formData = new FormData();
     formData.append('file', file);
-
+    
     try {
-      const response = await axios.post('http://localhost:3001/upload', formData);
+      const response = await axios.post('http://localhost:3001/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       setMessage(response.data.message);
     } catch (error) {
       setMessage('File upload failed. Please try again.');
@@ -26,7 +30,11 @@ function FileUpload() {
   return (
     <div>
       <form onSubmit={handleUpload}>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <input 
+        type="file" 
+        accept=".xlsx"
+        onChange={(e) => setFile(e.target.files[0])} 
+        />
         <button type="submit">Upload</button>
       </form>
       {message && <p>{message}</p>}
