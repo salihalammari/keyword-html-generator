@@ -7,20 +7,19 @@ const path = require('path')
 const fileRoutes = require('./routes/fileRoutes');
 const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
-const upload = multer({dest: 'upload/'}); //multer configuration for file upload
+const Keyword = require('./models/Keyword');
+
 
 const app = express();
 
-//Middleware
-app.use(cors({
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
-}));
-app.use(express.json());
-
 const uploadDir = path.join(__dirname, 'uploads');
-if(!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+const htmlDirectory = path.join(__dirname, 'public/html');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+if (!fs.existsSync(htmlDirectory)) {
+  fs.mkdirSync(htmlDirectory, { recursive: true });
 }
 
 const storage = multer.diskStorage({
@@ -33,15 +32,39 @@ const storage = multer.diskStorage({
   }
 });
 
-mongoose.connect(process.env.MONGO_URI,{
-    // serverSelectionTimeoutMS: 30000, // 30 seconds
-    // socketTimeoutMS: 45000, // 45 seconds
-})
+const upload = multer({ storage });
+
+//Middleware setup
+app.use(cors({
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+}));
+app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+app.use('/html', express.static(htmlDirectory));
+
+//Routes
+app.use('/upload', fileRoutes); //file Routes handles file uploads
+app.use(errorHandler);
+
+// Database connection
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error', err.message));
 
-app.use('/uploads', fileRoutes);
-app.use(errorHandler);
+//List keywords and provide download links
+app.get('/keywords', async (req, res) => {
+  try {
+      const keywords = await Keyword.find({});
+      const htmlLinks = keywords.map(keyword => ({
+        keyword: keyword.keyword,
+        link: `/html/${keyword.keyword}.html`
+      }))
+      res.json(htmlLinks);
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching keywords', error: error.message });
+  }
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
