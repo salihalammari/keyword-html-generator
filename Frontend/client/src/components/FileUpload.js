@@ -33,8 +33,7 @@ function FileUpload() {
         <input 
         type="file" 
         accept=".xlsx"
-        onChange={(e) => setFile(e.target.files[0])} 
-        />
+        onChange={(e) => setFile(e.target.files[0])} />
         <button type="submit">Upload</button>
       </form>
       {message && <p>{message}</p>}
