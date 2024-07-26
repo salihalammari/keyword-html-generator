@@ -55,7 +55,8 @@ mongoose.connect(process.env.MONGO_URI)
 //List keywords and provide download links
 app.get('/keywords', async (req, res) => {
   try {
-      const keywords = await Keyword.find({});
+      const { search = ''} = req.query;
+      const keywords = await Keyword.find({keyword: new RegExp(search, 'i')});
       const htmlLinks = keywords.map(keyword => ({
         keyword: keyword.keyword,
         link: `/html/${keyword.keyword}.html`
