@@ -11,24 +11,30 @@ async function processKeywords(filePath) {
         const data = xlsx.utils.sheet_to_json(sheet);
 
         const keywords = data.flat().map(keyword => keyword.toString().trim()).filter(Boolean); // Trim and filter out empty lines
+        const htmlDir = path.join(__dirname, '../public/html');
+        if (!fs.existsSync(htmlDir)) {
+            fs.mkdirSync(htmlDir, { recursive: true });
+        }
+
         for (let keyword of keywords) {
             try {
                 const existingKeyword = await Keyword.findOne({keyword});
 
                 if (existingKeyword){
-                    console.log(`Keyword already exists: ${keyword}`);
+                    console.log(`Keyword already exists: ${keyword}`); //debug
                 } else {
                     const htmlContent = `<html><head><title>${keyword}</title></head><body><h1>${keyword}</h1></body></html>`;
-                    await Keyword.create({ keyword, htmlContent }); // Save keyword and HTML content to MongoDB
-
+                    
                     // Save HTML file
-                    const htmlDir = path.join(__dirname, '../public/html');
-                    if (!fs.existsSync(htmlDir)) {
-                        fs.mkdirSync(htmlDir, { recursive: true });
-                    }
+                    // const htmlDir = path.join(__dirname, '../public/html');
+                    // if (!fs.existsSync(htmlDir)) {
+                    //     fs.mkdirSync(htmlDir, { recursive: true });
+                    // }
                     const htmlPath = path.join(htmlDir, `${keyword}.html`);
                     fs.writeFileSync(htmlPath, htmlContent);
-                    console.log(`Saved keyword and HTML: ${keyword}`);
+                    console.log(`Saved keyword and HTML: ${keyword}`); //debug
+
+                    await Keyword.create({ keyword, htmlContent }); // Save keyword and HTML content to MongoDB
                 }
             }catch (err) {
                 console.error(`Error saving keyword: ${keyword}. ${err.message}`);
